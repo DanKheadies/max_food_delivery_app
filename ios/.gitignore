@@ -34,5 +34,4 @@ Runner/GeneratedPluginRegistrant.*
 !default.perspectivev3
 
 # Custom
-credentials
-Credentials.generated.swift
+Flutter/Debug.xcconfig
