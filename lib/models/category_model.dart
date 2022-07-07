@@ -6,7 +6,7 @@ class Category extends Equatable {
   final String name;
   final Image image;
 
-  Category({
+  const Category({
     required this.id,
     required this.name,
     required this.image,
@@ -29,17 +29,17 @@ class Category extends Equatable {
     Category(
       id: 3,
       name: 'Salad',
-      image: Image.asset('assets/salad.png'),
+      image: Image.asset('assets/avocado.png'),
     ),
     Category(
       id: 4,
       name: 'Dessert',
-      image: Image.asset('assets/dessert.png'),
+      image: Image.asset('assets/pancake.png'),
     ),
     Category(
       id: 5,
       name: 'Drink',
-      image: Image.asset('assets/drink.png'),
+      image: Image.asset('assets/juice.png'),
     ),
   ];
 }

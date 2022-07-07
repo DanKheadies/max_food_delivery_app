@@ -4,20 +4,22 @@ import 'package:max_food_delivery_app/models/models.dart';
 
 class Restaurant extends Equatable {
   final int id;
-  final String imageUrl;
   final String name;
+  final String imageUrl;
   final List<String> tags;
   final List<MenuItem> menuItems;
+  final String priceCategory;
   final int deliveryTime;
   final double deliveryFee;
   final double distance;
 
   const Restaurant({
     required this.id,
-    required this.imageUrl,
     required this.name,
+    required this.imageUrl,
     required this.tags,
     required this.menuItems,
+    required this.priceCategory,
     required this.deliveryTime,
     required this.deliveryFee,
     required this.distance,
@@ -26,9 +28,11 @@ class Restaurant extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        imageUrl,
         name,
+        imageUrl,
         tags,
+        menuItems,
+        priceCategory,
         deliveryTime,
         deliveryFee,
         distance,
@@ -39,11 +43,16 @@ class Restaurant extends Equatable {
       id: 1,
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
-          'https://holisticgaming.com/static/media/tsodk.8f8ceb07491dae3e6199.png',
-      tags: const ['Italian', 'Dessert', 'Ice Cream'],
+          'https://holisticgaming.com/static/media/terraria.3233a77fadd0c6f979f3.jpg',
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 1)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
       menuItems: MenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 1)
           .toList(),
+      priceCategory: '\$',
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -53,10 +62,15 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/toel.adf11c386b0caeebcc0e.png',
-      tags: const ['Italian', 'Dessert', 'Ice Cream'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 2)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
       menuItems: MenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 2)
           .toList(),
+      priceCategory: '\$',
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -66,10 +80,15 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/td_sbf_td.8e0469aa0058ebe357fb.png',
-      tags: const ['Italian', 'Dessert', 'Ice Cream'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 3)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
       menuItems: MenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 3)
           .toList(),
+      priceCategory: '\$',
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -79,10 +98,15 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/immunis.f0bd6337e26699fa3b49.png',
-      tags: const ['Italian', 'Dessert', 'Ice Cream'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 4)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
       menuItems: MenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 4)
           .toList(),
+      priceCategory: '\$\$',
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,

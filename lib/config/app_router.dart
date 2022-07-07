@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/screens/screens.dart';
 
 class AppRouter {
@@ -22,9 +23,11 @@ class AppRouter {
       case LocationScreen.routeName:
         return LocationScreen.route();
       case RestaurantDetailsScreen.routeName:
-        return RestaurantDetailsScreen.route();
+        return RestaurantDetailsScreen.route(
+            restaurant: settings.arguments as Restaurant);
       case RestaurantListingScreen.routeName:
-        return RestaurantListingScreen.route();
+        return RestaurantListingScreen.route(
+            restaurants: settings.arguments as List<Restaurant>);
       case VoucherScreen.routeName:
         return VoucherScreen.route();
       default:

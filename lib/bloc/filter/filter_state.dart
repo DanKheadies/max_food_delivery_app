@@ -1,20 +1,22 @@
-// part of 'filter_bloc.dart';
+part of 'filter_bloc.dart';
 
-// @immutable
-// abstract class FilterState extends Equatable {
-//   const FilterState();
+@immutable
+abstract class FilterState extends Equatable {
+  const FilterState();
 
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class FilterLoading extends FilterState {}
+class FilterLoading extends FilterState {}
 
-// class FilterLoaded extends FilterState {
-//   final Filter filter;
+class FilterLoaded extends FilterState {
+  final Filter filter;
 
-//   const FilterLoaded({this.filter = Filter()});
+  const FilterLoaded({
+    this.filter = const Filter(),
+  });
 
-//   @override
-//   List<Object> get props => [filter];
-// }
+  @override
+  List<Object> get props => [filter];
+}

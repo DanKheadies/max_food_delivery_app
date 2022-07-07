@@ -36,14 +36,17 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => GeolocationBloc(
-              geolocationRepository: context.read<GeolocationRepository>(),
-            )..add(LoadGeolocation()),
-          ),
-          BlocProvider(
             create: (context) => AutoCompleteBloc(
               placesRepository: context.read<PlacesRepository>(),
             )..add(const LoadAutoComplete()),
+          ),
+          BlocProvider(
+            create: (context) => FilterBloc()..add(LoadFilter()),
+          ),
+          BlocProvider(
+            create: (context) => GeolocationBloc(
+              geolocationRepository: context.read<GeolocationRepository>(),
+            )..add(LoadGeolocation()),
           ),
           BlocProvider(
             create: (context) => PlaceBloc(
@@ -56,7 +59,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: LocationScreen.routeName,
+          initialRoute: HomeScreen.routeName,
         ),
       ),
     );

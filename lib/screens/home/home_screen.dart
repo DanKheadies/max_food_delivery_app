@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-// import 'package:max_food_delivery_app/config/theme.dart';
+import 'package:max_food_delivery_app/models/models.dart';
+import 'package:max_food_delivery_app/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -18,29 +18,105 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Center(
-        child: SvgPicture.asset(
-          'assets/logo.svg',
-          height: 100,
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: const CustomAppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: Category.categories.length,
+                  itemBuilder: (context, index) {
+                    return CategoryBox(
+                      category: Category.categories[index],
+                    );
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 125,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: Promo.promos.length,
+                  itemBuilder: (context, index) {
+                    return PromoBox(
+                      promo: Promo.promos[index],
+                    );
+                  },
+                ),
+              ),
+            ),
+            const FoodSearchBox(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Top Rated',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: Restaurant.restaurants.length,
+              itemBuilder: (context, index) {
+                return RestaurantCard(
+                  restaurant: Restaurant.restaurants[index],
+                );
+              },
+            ),
+          ],
         ),
-        // child: ElevatedButton(
-        //   style: ElevatedButton.styleFrom(
-        //     primary: Theme.of(context).primaryColor,
-        //   ),
-        //   onPressed: () {
-        //     Navigator.pushNamed(context, '/location');
-        //   },
-        //   child: Text(
-        //     'Location Screen',
-        //     style: Theme.of(context).textTheme.headline3!.copyWith(
-        //           color: Colors.white,
-        //         ),
-        //   ),
-        // ),
+      ),
+    );
+  }
+}
+
+class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+  const CustomAppBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'CURRENT LOCATION',
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Colors.white,
+                ),
+          ),
+          Text(
+            'Singapore, 1 Shenton Way',
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: Colors.white,
+                ),
+          ),
+        ],
+      ),
+      centerTitle: false,
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: IconButton(
+        icon: const Icon(Icons.person),
+        onPressed: () {},
       ),
     );
   }
