@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/widgets/widgets.dart';
 
@@ -73,12 +75,21 @@ class RestaurantDetailsScreen extends StatelessWidget {
                               '\$${menuItem.price}',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                              onPressed: () {},
+                            BlocBuilder<BasketBloc, BasketState>(
+                              builder: (context, state) {
+                                return IconButton(
+                                  icon: Icon(
+                                    Icons.add_circle,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  onPressed: () {
+                                    context
+                                        .read<BasketBloc>()
+                                        .add(AddItem(menuItem));
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -115,7 +126,9 @@ class RestaurantDetailsScreen extends StatelessWidget {
                     horizontal: 50,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/basket');
+                },
                 child: const Text('Basket'),
               ),
             ],

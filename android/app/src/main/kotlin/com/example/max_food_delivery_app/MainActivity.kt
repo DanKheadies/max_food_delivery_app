@@ -1,4 +1,4 @@
-package com.example.max_food_delivery_app
+package com.DTFun.max_food_delivery_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -7,16 +7,17 @@ import 'package:max_food_delivery_app/config/app_router.dart';
 import 'package:max_food_delivery_app/config/theme.dart';
 import 'package:max_food_delivery_app/repositories/repositories.dart';
 import 'package:max_food_delivery_app/screens/screens.dart';
+import 'package:max_food_delivery_app/simple_bloc_observer.dart';
 
 void main() {
   // Bloc.observer = SimpleBlocObserver();
-  // BlocOverrides.runZoned(
-  //   () {
-  //     runApp(const MyApp());
-  //   },
-  //   blocObserver: SimpleBlocObserver(),
-  // );
-  runApp(const MyApp());
+  BlocOverrides.runZoned(
+    () {
+      runApp(const MyApp());
+    },
+    blocObserver: SimpleBlocObserver(),
+  );
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
             create: (context) => AutoCompleteBloc(
               placesRepository: context.read<PlacesRepository>(),
             )..add(const LoadAutoComplete()),
+          ),
+          BlocProvider(
+            create: (context) => BasketBloc()..add(StartBasket()),
           ),
           BlocProvider(
             create: (context) => FilterBloc()..add(LoadFilter()),

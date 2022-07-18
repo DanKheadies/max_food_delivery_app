@@ -1,68 +1,70 @@
-// part of 'basket_bloc.dart';
+part of 'basket_bloc.dart';
 
-// @immutable
-// abstract class BasketEvent extends Equatable {
-//   const BasketEvent();
-// }
+@immutable
+abstract class BasketEvent extends Equatable {
+  const BasketEvent();
+}
 
-// class StartBasket extends BasketEvent {
-//   @override
-//   List<Object> get props => [];
-// }
+class StartBasket extends BasketEvent {
+  @override
+  List<Object> get props => [];
+}
 
-// class AddItem extends BasketEvent {
-//   final MenuItem item;
+class AddItem extends BasketEvent {
+  final RestMenuItem item;
 
-//   const AddItem(this.item);
+  const AddItem(this.item);
 
-//   @override
-//   List<Object> get props => [item];
-// }
+  @override
+  List<Object> get props => [item];
+}
 
-// class RemoveItem extends BasketEvent {
-//   final MenuItem item;
+class RemoveItem extends BasketEvent {
+  final RestMenuItem item;
 
-//   const RemoveItem(this.item);
+  const RemoveItem(this.item);
 
-//   @override
-//   List<Object> get props => [item];
-// }
+  @override
+  List<Object> get props => [item];
+}
 
-// class RemoveAllItem extends BasketEvent {
-//   final MenuItem item;
+class RemoveAllItem extends BasketEvent {
+  final RestMenuItem item;
 
-//   const RemoveAllItem(this.item);
+  const RemoveAllItem(this.item);
 
-//   @override
-//   List<Object> get props => [item];
-// }
+  @override
+  List<Object> get props => [item];
+}
 
-// class ToggleSwitch extends BasketEvent {
-//   const ToggleSwitch();
+class ToggleSwitch extends BasketEvent {
+  const ToggleSwitch();
 
-//   @override
-//   List<Object?> get props => [];
-// }
+  @override
+  List<Object?> get props => [];
+}
 
-// class AddVoucher extends BasketEvent {
-//   final Voucher voucher;
-//   const AddVoucher(this.voucher);
+class AddVoucher extends BasketEvent {
+  final Voucher voucher;
 
-//   @override
-//   List<Object?> get props => [voucher];
-// }
+  const AddVoucher(this.voucher);
 
-// class SelectDeliveryDay extends BasketEvent {
-//   const SelectDeliveryDay();
+  @override
+  List<Object?> get props => [voucher];
+}
 
-//   @override
-//   List<Object?> get props => [];
-// }
+class SelectDeliveryDay extends BasketEvent {
+  const SelectDeliveryDay();
 
-// class SelectDeliveryTime extends BasketEvent {
-//   final DeliveryTime deliveryTime;
-//   const SelectDeliveryTime(this.deliveryTime);
+  @override
+  List<Object?> get props => [];
+}
 
-//   @override
-//   List<Object?> get props => [deliveryTime];
-// }
+class SelectDeliveryTime extends BasketEvent {
+  final DeliveryTime deliveryTime;
+
+  const SelectDeliveryTime(this.deliveryTime);
+
+  @override
+  List<Object?> get props => [deliveryTime];
+}

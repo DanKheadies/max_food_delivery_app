@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class MenuItem extends Equatable {
+class RestMenuItem extends Equatable {
   final int id;
   final int restaurantId;
   final String name;
@@ -8,7 +8,7 @@ class MenuItem extends Equatable {
   final String description;
   final double price;
 
-  const MenuItem({
+  const RestMenuItem({
     required this.id,
     required this.restaurantId,
     required this.name,
@@ -27,8 +27,8 @@ class MenuItem extends Equatable {
         price,
       ];
 
-  static List<MenuItem> menuItems = const [
-    MenuItem(
+  static List<RestMenuItem> menuItems = const [
+    RestMenuItem(
       id: 1,
       restaurantId: 1,
       name: 'Margherita',
@@ -36,7 +36,7 @@ class MenuItem extends Equatable {
       description: 'Tomatoes, mozzarella, basil',
       price: 4.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 2,
       restaurantId: 1,
       name: '4 Formaggi',
@@ -44,7 +44,7 @@ class MenuItem extends Equatable {
       description: 'Tomatoes, mozzarella, basil',
       price: 4.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 3,
       restaurantId: 1,
       name: 'Baviera',
@@ -52,15 +52,15 @@ class MenuItem extends Equatable {
       description: 'Tomatoes, mozzarella, basil',
       price: 4.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 4,
       restaurantId: 1,
-      name: 'Baviera',
+      name: 'Savory, Spicy, Sweet',
       category: 'Pizza',
-      description: 'Tomatoes, mozzarella, basil',
+      description: 'Sausage, jalapeno, pineapple',
       price: 4.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 5,
       restaurantId: 1,
       name: 'Coca Cola',
@@ -68,7 +68,7 @@ class MenuItem extends Equatable {
       description: 'A fresh drink',
       price: 1.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 6,
       restaurantId: 1,
       name: 'Coca Cola',
@@ -76,7 +76,7 @@ class MenuItem extends Equatable {
       description: 'A fresh drink',
       price: 1.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 7,
       restaurantId: 2,
       name: 'Coca Cola',
@@ -84,7 +84,7 @@ class MenuItem extends Equatable {
       description: 'A fresh drink',
       price: 1.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 8,
       restaurantId: 3,
       name: 'Water',
@@ -92,7 +92,7 @@ class MenuItem extends Equatable {
       description: 'A fresh drink',
       price: 1.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 9,
       restaurantId: 2,
       name: 'Caesar Salad',
@@ -100,7 +100,7 @@ class MenuItem extends Equatable {
       description: 'A fresh drink',
       price: 1.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 10,
       restaurantId: 3,
       name: 'CheeseBurger',
@@ -108,7 +108,7 @@ class MenuItem extends Equatable {
       description: 'A burger with Cheese',
       price: 9.99,
     ),
-    MenuItem(
+    RestMenuItem(
       id: 11,
       restaurantId: 4,
       name: 'Chocolate Cake',

@@ -7,7 +7,7 @@ class Restaurant extends Equatable {
   final String name;
   final String imageUrl;
   final List<String> tags;
-  final List<MenuItem> menuItems;
+  final List<RestMenuItem> menuItems;
   final String priceCategory;
   final int deliveryTime;
   final double deliveryFee;
@@ -44,12 +44,12 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/terraria.3233a77fadd0c6f979f3.jpg',
-      tags: MenuItem.menuItems
+      tags: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 1)
           .map((menuItem) => menuItem.category)
           .toSet()
           .toList(),
-      menuItems: MenuItem.menuItems
+      menuItems: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 1)
           .toList(),
       priceCategory: '\$',
@@ -62,12 +62,12 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/toel.adf11c386b0caeebcc0e.png',
-      tags: MenuItem.menuItems
+      tags: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 2)
           .map((menuItem) => menuItem.category)
           .toSet()
           .toList(),
-      menuItems: MenuItem.menuItems
+      menuItems: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 2)
           .toList(),
       priceCategory: '\$',
@@ -80,12 +80,12 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/td_sbf_td.8e0469aa0058ebe357fb.png',
-      tags: MenuItem.menuItems
+      tags: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 3)
           .map((menuItem) => menuItem.category)
           .toSet()
           .toList(),
-      menuItems: MenuItem.menuItems
+      menuItems: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 3)
           .toList(),
       priceCategory: '\$',
@@ -98,12 +98,12 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://holisticgaming.com/static/media/immunis.f0bd6337e26699fa3b49.png',
-      tags: MenuItem.menuItems
+      tags: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 4)
           .map((menuItem) => menuItem.category)
           .toSet()
           .toList(),
-      menuItems: MenuItem.menuItems
+      menuItems: RestMenuItem.menuItems
           .where((menuItem) => menuItem.restaurantId == 4)
           .toList(),
       priceCategory: '\$\$',

@@ -31,8 +31,10 @@ dependencies:
     sdk: flutter
 
   bloc: ^8.0.3
+  cloud_firestore: ^3.3.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
+  firebase_core: ^1.19.2
   flutter_bloc: ^8.0.1
   flutter_svg: ^1.1.0
   geolocator: ^8.2.1

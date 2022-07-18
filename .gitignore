@@ -48,3 +48,5 @@ app.*.map.json
 
 # Custom
 secrets.dart
+/ios/Runner/GoogleService-Info.plist
+/android/app/google-services.json
