@@ -77,18 +77,30 @@ class RestaurantDetailsScreen extends StatelessWidget {
                             ),
                             BlocBuilder<BasketBloc, BasketState>(
                               builder: (context, state) {
-                                return IconButton(
-                                  icon: Icon(
-                                    Icons.add_circle,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                                  onPressed: () {
-                                    context
-                                        .read<BasketBloc>()
-                                        .add(AddItem(menuItem));
-                                  },
-                                );
+                                if (state is BasketLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                if (state is BasketLoaded) {
+                                  return IconButton(
+                                    icon: Icon(
+                                      Icons.add_circle,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    onPressed: () {
+                                      context
+                                          .read<BasketBloc>()
+                                          .add(AddItem(menuItem));
+                                    },
+                                  );
+                                } else {
+                                  return const Center(
+                                    child: Text('Something went wrong.'),
+                                  );
+                                }
                               },
                             ),
                           ],

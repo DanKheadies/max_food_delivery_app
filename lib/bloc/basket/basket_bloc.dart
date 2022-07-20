@@ -1,21 +1,41 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 
 part 'basket_event.dart';
 part 'basket_state.dart';
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
-  BasketBloc() : super(BasketLoading()) {
+  final VoucherBloc _voucherBloc;
+  late StreamSubscription _voucherSubscription;
+
+  BasketBloc({
+    required VoucherBloc voucherBloc,
+  })  : _voucherBloc = voucherBloc,
+        super(BasketLoading()) {
+    // BasketBloc() : super(BasketLoading()) {
     on<StartBasket>(_onStartBasket);
     on<AddItem>(_onAddItem);
     on<RemoveItem>(_onRemoveItem);
     on<RemoveAllItem>(_onRemoveAllItem);
     on<ToggleSwitch>(_onToggleSwitch);
-    on<AddVoucher>(_onAddVoucher);
+    on<ApplyVoucher>(_onApplyVoucher);
     on<SelectDeliveryTime>(_onSelectDeliveryTime);
+
+    _voucherSubscription = voucherBloc.stream.listen((state) {
+      print('idk');
+      if (state is VoucherSelected) {
+        print('test');
+        add(
+          ApplyVoucher(state.voucher),
+        );
+      }
+    });
   }
 
   // @override
@@ -37,8 +57,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     try {
       await Future<void>.delayed(const Duration(seconds: 1));
       emit(
-        BasketLoaded(
-          basket: const Basket(),
+        const BasketLoaded(
+          basket: Basket(),
         ),
       );
     } catch (_) {}
@@ -125,8 +145,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     }
   }
 
-  void _onAddVoucher(
-    AddVoucher event,
+  void _onApplyVoucher(
+    ApplyVoucher event,
     Emitter<BasketState> emit,
   ) {
     final state = this.state;

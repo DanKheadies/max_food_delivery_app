@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/models/models.dart';
+import 'package:max_food_delivery_app/repositories/repositories.dart';
 
 class VoucherScreen extends StatelessWidget {
   static const String routeName = '/voucher';
@@ -75,6 +76,9 @@ class VoucherScreen extends StatelessWidget {
                           hintText: 'Voucher Code',
                           contentPadding: EdgeInsets.all(10),
                         ),
+                        onChanged: (value) async {
+                          print(VoucherRepository().searchVoucher(value));
+                        },
                       ),
                     ),
                   ],
@@ -86,58 +90,74 @@ class VoucherScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: Voucher.vouchers.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    margin: const EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '1x',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Text(
-                            Voucher.vouchers[index].code,
-                            style: Theme.of(context).textTheme.headline6,
+              BlocBuilder<VoucherBloc, VoucherState>(
+                builder: (context, state) {
+                  if (state is VoucherLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is VoucherLoaded) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.vouchers.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
                           ),
-                        ),
-                        BlocBuilder<BasketBloc, BasketState>(
-                          builder: (context, state) {
-                            return TextButton(
-                              onPressed: () {
-                                context
-                                    .read<BasketBloc>()
-                                    .add(AddVoucher(Voucher.vouchers[index]));
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Apply'),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  );
+                          margin: const EdgeInsets.only(
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '1x',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                              ),
+                              const SizedBox(width: 20),
+                              Expanded(
+                                child: Text(
+                                  state.vouchers[index].code,
+                                  textAlign: TextAlign.left,
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context.read<VoucherBloc>().add(
+                                        SelectVouchers(
+                                          voucher: state.vouchers[index],
+                                        ),
+                                      );
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Apply'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('Something went wrong'),
+                    );
+                  }
                 },
               ),
             ],
