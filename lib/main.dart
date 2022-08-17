@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<PlacesRepository>(
           create: (_) => PlacesRepository(),
         ),
+        RepositoryProvider<RestaurantRepository>(
+          create: (_) => RestaurantRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -45,9 +48,6 @@ class MyApp extends StatelessWidget {
             create: (context) => AutoCompleteBloc(
               placesRepository: context.read<PlacesRepository>(),
             )..add(const LoadAutoComplete()),
-          ),
-          BlocProvider(
-            create: (context) => FilterBloc()..add(LoadFilter()),
           ),
           BlocProvider(
             create: (context) => GeolocationBloc(
@@ -58,6 +58,17 @@ class MyApp extends StatelessWidget {
             create: (context) => PlaceBloc(
               placesRepository: context.read<PlacesRepository>(),
             ),
+          ),
+          // Order is important: RestaurantBloc has to initialize before Filter
+          BlocProvider(
+            create: (context) => RestaurantBloc(
+              restaurantRepository: context.read<RestaurantRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => FilterBloc(
+              restaurantBloc: context.read<RestaurantBloc>(),
+            )..add(LoadFilter()),
           ),
           // Order is important: VoucherBloc has to initialize before Basket
           BlocProvider(

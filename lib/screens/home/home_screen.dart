@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/widgets/widgets.dart';
 
@@ -67,14 +69,32 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: Restaurant.restaurants.length,
-              itemBuilder: (context, index) {
-                return RestaurantCard(
-                  restaurant: Restaurant.restaurants[index],
-                );
+            BlocBuilder<RestaurantBloc, RestaurantState>(
+              builder: (context, state) {
+                if (state is RestaurantLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is RestaurantLoaded) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.restaurants.length,
+                      itemBuilder: (context, index) {
+                        return RestaurantCard(
+                          restaurant: state.restaurants[index],
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Text('Something went wrong.'),
+                  );
+                }
               },
             ),
           ],

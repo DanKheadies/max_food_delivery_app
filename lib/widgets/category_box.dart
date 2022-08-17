@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 
 class CategoryBox extends StatelessWidget {
   final Category category;
+
   const CategoryBox({
     Key? key,
     required this.category,
@@ -11,15 +14,27 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Restaurant> restaurants = Restaurant.restaurants
-        .where((restaurant) => restaurant.tags.contains(category.name))
+    // final List<Restaurant> restaurants = Restaurant.restaurants
+    //     .where((restaurant) => restaurant.tags.contains(category.name))
+    //     .toList();
+    List<Restaurant> restaurants = context.select((RestaurantBloc bloc) {
+      if (bloc.state is RestaurantLoaded) {
+        return (bloc.state as RestaurantLoaded).restaurants;
+      } else {
+        return <Restaurant>[];
+      }
+    });
+
+    final List<Restaurant> filteredRestaurants = restaurants
+        .where((restaurant) => restaurant.categories.contains(category))
         .toList();
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           '/restaurant-listing',
-          arguments: restaurants,
+          arguments: filteredRestaurants,
         );
       },
       child: Container(
@@ -41,8 +56,12 @@ class CategoryBox extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white,
                 ),
-                child: category.image,
               ),
+            ),
+            Positioned(
+              top: 5,
+              left: 7.5,
+              child: Image.asset(category.imageUrl),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -20,17 +20,15 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         super(BasketLoading()) {
     // BasketBloc() : super(BasketLoading()) {
     on<StartBasket>(_onStartBasket);
-    on<AddItem>(_onAddItem);
-    on<RemoveItem>(_onRemoveItem);
-    on<RemoveAllItem>(_onRemoveAllItem);
+    on<AddProduct>(_onAddProduct);
+    on<RemoveProduct>(_onRemoveProduct);
+    on<RemoveAllProducts>(_onRemoveAllProducts);
     on<ToggleSwitch>(_onToggleSwitch);
     on<ApplyVoucher>(_onApplyVoucher);
     on<SelectDeliveryTime>(_onSelectDeliveryTime);
 
     _voucherSubscription = voucherBloc.stream.listen((state) {
-      print('idk');
       if (state is VoucherSelected) {
-        print('test');
         add(
           ApplyVoucher(state.voucher),
         );
@@ -72,8 +70,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   //   } catch (_) {}
   // }
 
-  void _onAddItem(
-    AddItem event,
+  void _onAddProduct(
+    AddProduct event,
     Emitter<BasketState> emit,
   ) {
     final state = this.state;
@@ -82,7 +80,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         emit(
           BasketLoaded(
             basket: state.basket.copyWith(
-              items: List.from(state.basket.items)..add(event.item),
+              products: List.from(state.basket.products)..add(event.product),
             ),
           ),
         );
@@ -90,8 +88,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     }
   }
 
-  void _onRemoveItem(
-    RemoveItem event,
+  void _onRemoveProduct(
+    RemoveProduct event,
     Emitter<BasketState> emit,
   ) {
     final state = this.state;
@@ -100,7 +98,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         emit(
           BasketLoaded(
             basket: state.basket.copyWith(
-              items: List.from(state.basket.items)..remove(event.item),
+              products: List.from(state.basket.products)..remove(event.product),
             ),
           ),
         );
@@ -108,8 +106,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     }
   }
 
-  void _onRemoveAllItem(
-    RemoveAllItem event,
+  void _onRemoveAllProducts(
+    RemoveAllProducts event,
     Emitter<BasketState> emit,
   ) {
     final state = this.state;
@@ -118,8 +116,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         emit(
           BasketLoaded(
             basket: state.basket.copyWith(
-              items: List.from(state.basket.items)
-                ..removeWhere((item) => item == event.item),
+              products: List.from(state.basket.products)
+                ..removeWhere((product) => product == event.product),
             ),
           ),
         );
