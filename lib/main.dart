@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/config/app_router.dart';
 import 'package:max_food_delivery_app/config/theme.dart';
 import 'package:max_food_delivery_app/firebase_options.dart';
+import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/repositories/repositories.dart';
 import 'package:max_food_delivery_app/screens/screens.dart';
 import 'package:max_food_delivery_app/simple_bloc_observer.dart';
@@ -15,7 +17,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // Bloc.observer = SimpleBlocObserver();
+  await Hive.initFlutter();
+  Hive.registerAdapter(PlaceAdapter());
+
   BlocOverrides.runZoned(
     () {
       runApp(const MyApp());
@@ -35,6 +39,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<GeolocationRepository>(
           create: (_) => GeolocationRepository(),
         ),
+        RepositoryProvider<LocalStorageRepository>(
+          create: (_) => LocalStorageRepository(),
+        ),
         RepositoryProvider<PlacesRepository>(
           create: (_) => PlacesRepository(),
         ),
@@ -50,14 +57,11 @@ class MyApp extends StatelessWidget {
             )..add(const LoadAutoComplete()),
           ),
           BlocProvider(
-            create: (context) => GeolocationBloc(
+            create: (context) => LocationBloc(
               geolocationRepository: context.read<GeolocationRepository>(),
-            )..add(LoadGeolocation()),
-          ),
-          BlocProvider(
-            create: (context) => PlaceBloc(
+              localStorageRepository: context.read<LocalStorageRepository>(),
               placesRepository: context.read<PlacesRepository>(),
-            ),
+            )..add(const LoadMap()),
           ),
           // Order is important: RestaurantBloc has to initialize before Filter
           BlocProvider(
@@ -87,7 +91,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: HomeScreen.routeName,
+          initialRoute: LocationScreen.routeName,
         ),
       ),
     );

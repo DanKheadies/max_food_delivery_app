@@ -43,7 +43,7 @@ class PlacesRepository extends BasePlacesRepository {
 
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
-    var results = json['results'] as Map<String, dynamic>;
+    var results = json['result'] as Map<String, dynamic>;
 
     return Place.fromJson(results);
   }

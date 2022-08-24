@@ -19,6 +19,7 @@ class AutoCompleteBloc extends Bloc<AutoCompleteEvent, AutoCompleteState> {
   })  : _placesRespository = placesRepository,
         super(AutoCompleteLoading()) {
     on<LoadAutoComplete>(_onLoadAutoComplete);
+    on<ClearAutoComplete>(_onClearAutoComplete);
   }
 
   void _onLoadAutoComplete(
@@ -42,5 +43,22 @@ class AutoCompleteBloc extends Bloc<AutoCompleteEvent, AutoCompleteState> {
     // } catch (_) {
     //   print('caught');
     // }
+  }
+
+  void _onClearAutoComplete(
+    ClearAutoComplete event,
+    Emitter<AutoCompleteState> emit,
+  ) {
+    emit(
+      AutoCompleteLoaded(
+        autoComplete: List.empty(),
+      ),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    _placesSubscription?.cancel();
+    super.close();
   }
 }

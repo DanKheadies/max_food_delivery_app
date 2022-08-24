@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/widgets/widgets.dart';
@@ -24,51 +26,66 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<PlaceBloc, PlaceState>(
+      body: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
-          if (state is PlaceLoading) {
-            // return const Center(
-            //   child: CircularProgressIndicator(),
-            // );
-            return Stack(
-              children: [
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height,
-                //   width: double.infinity,
-                //   child: BlocBuilder<GeolocationBloc, GeolocationState>(
-                BlocBuilder<GeolocationBloc, GeolocationState>(
-                  builder: (context, state) {
-                    if (state is GeolocationLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is GeolocationLoaded) {
-                      return Stack(
-                        children: [
-                          Gmap(
-                            lat: state.position.latitude,
-                            long: state.position.longitude,
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const Center(
-                        child: Text('Something went wrong.'),
-                      );
-                    }
-                  },
-                ),
-                // ),
-                const Location(),
-                const SaveButton(),
-              ],
+          if (state is LocationLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          } else if (state is PlaceLoaded) {
+          }
+          if (state is LocationLoaded) {
             return Stack(
               children: [
-                Gmap(
-                  lat: state.place.lat,
-                  long: state.place.long,
+                GoogleMap(
+                  myLocationEnabled: true,
+                  buildingsEnabled: false,
+                  onMapCreated: (GoogleMapController controller) {
+                    context.read<LocationBloc>().add(
+                          LoadMap(
+                            controller: controller,
+                          ),
+                        );
+                  },
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      state.place.lat,
+                      state.place.long,
+                    ),
+                    zoom: 12,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 40,
+                    horizontal: 20,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/images/logo.svg',
+                            height: 50,
+                          ),
+                          const SizedBox(width: 10),
+                          const Expanded(child: LocationSearchBox()),
+                        ],
+                      ),
+                      const SearchBoxSuggestions(),
+                      const Expanded(child: SizedBox()),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Theme.of(context).primaryColor,
+                          fixedSize: const Size(200, 40),
+                        ),
+                        child: const Text('Save'),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             );
