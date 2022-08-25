@@ -6,6 +6,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:max_food_delivery_app/bloc/blocs.dart';
 import 'package:max_food_delivery_app/config/app_router.dart';
 import 'package:max_food_delivery_app/config/theme.dart';
+import 'package:max_food_delivery_app/datasources/local_datasource/local_datasource.dart';
+import 'package:max_food_delivery_app/datasources/places_api/place_api.dart';
 import 'package:max_food_delivery_app/firebase_options.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/repositories/repositories.dart';
@@ -39,11 +41,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<GeolocationRepository>(
           create: (_) => GeolocationRepository(),
         ),
-        RepositoryProvider<LocalStorageRepository>(
-          create: (_) => LocalStorageRepository(),
-        ),
-        RepositoryProvider<PlacesRepository>(
-          create: (_) => PlacesRepository(),
+        RepositoryProvider<LocationRepository>(
+          create: (_) => LocationRepository(
+            placesAPI: PlacesAPIImplementation(),
+            localDatasource: LocalDatasourceImplementation(),
+          ),
         ),
         RepositoryProvider<RestaurantRepository>(
           create: (_) => RestaurantRepository(),
@@ -51,22 +53,23 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          // Order is important: if a Provider uses another, it must come sequentially
           BlocProvider(
             create: (context) => AutoCompleteBloc(
-              placesRepository: context.read<PlacesRepository>(),
+              locationRepository: context.read<LocationRepository>(),
             )..add(const LoadAutoComplete()),
           ),
           BlocProvider(
             create: (context) => LocationBloc(
               geolocationRepository: context.read<GeolocationRepository>(),
-              localStorageRepository: context.read<LocalStorageRepository>(),
-              placesRepository: context.read<PlacesRepository>(),
+              locationRepository: context.read<LocationRepository>(),
+              restaurantRepository: context.read<RestaurantRepository>(),
             )..add(const LoadMap()),
           ),
-          // Order is important: RestaurantBloc has to initialize before Filter
           BlocProvider(
             create: (context) => RestaurantBloc(
               restaurantRepository: context.read<RestaurantRepository>(),
+              locationBloc: context.read<LocationBloc>(),
             ),
           ),
           BlocProvider(
@@ -74,7 +77,6 @@ class MyApp extends StatelessWidget {
               restaurantBloc: context.read<RestaurantBloc>(),
             )..add(LoadFilter()),
           ),
-          // Order is important: VoucherBloc has to initialize before Basket
           BlocProvider(
             create: (context) => VoucherBloc(
               voucherRepository: VoucherRepository(),

@@ -11,7 +11,7 @@ abstract class AutoCompleteState extends Equatable {
 class AutoCompleteLoading extends AutoCompleteState {}
 
 class AutoCompleteLoaded extends AutoCompleteState {
-  final List<PlaceAutoComplete> autoComplete;
+  final List<Place> autoComplete;
 
   const AutoCompleteLoaded({
     required this.autoComplete,

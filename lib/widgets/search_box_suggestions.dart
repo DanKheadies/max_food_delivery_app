@@ -23,7 +23,7 @@ class SearchBoxSuggestions extends StatelessWidget {
                 color: Colors.black.withOpacity(0.6),
                 child: ListTile(
                   title: Text(
-                    state.autoComplete[index].description,
+                    state.autoComplete[index].name,
                     style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: Colors.white,
                         ),

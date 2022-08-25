@@ -31,13 +31,13 @@ dependencies:
     sdk: flutter
 
   bloc: ^8.0.3
-  cloud_firestore: ^3.3.0
+  cloud_firestore: ^3.4.6
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
-  firebase_core: ^1.19.2
+  firebase_core: ^1.21.1
   flutter_bloc: ^8.0.1
   flutter_svg: ^1.1.0
-  geolocator: ^8.2.1
+  geolocator: ^9.0.1
   google_maps_flutter: ^2.1.7
   hive: ^2.2.3
   hive_flutter: ^1.1.0

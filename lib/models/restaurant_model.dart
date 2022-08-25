@@ -16,6 +16,7 @@ class Restaurant extends Equatable {
   final int deliveryTime;
   final double deliveryFee;
   final double distance;
+  final Place address;
 
   const Restaurant({
     required this.id,
@@ -30,6 +31,7 @@ class Restaurant extends Equatable {
     this.deliveryTime = 10,
     this.deliveryFee = 10,
     this.distance = 15,
+    required this.address,
   });
 
   @override
@@ -46,6 +48,7 @@ class Restaurant extends Equatable {
         deliveryTime,
         deliveryFee,
         distance,
+        address,
       ];
 
   factory Restaurant.fromSnapshot(DocumentSnapshot snap) {
@@ -69,6 +72,7 @@ class Restaurant extends Equatable {
         return OpeningHours.fromSnapshot(openingHour);
       }).toList(),
       // openingHours: OpeningHours.openingHoursList,
+      address: Place.fromJson(snap['address']),
     );
   }
 

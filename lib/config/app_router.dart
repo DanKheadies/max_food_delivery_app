@@ -5,7 +5,7 @@ import 'package:max_food_delivery_app/screens/screens.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('The Route is: ${settings.name}');
+    // print('The Route is: ${settings.name}');
 
     switch (settings.name) {
       case '/':

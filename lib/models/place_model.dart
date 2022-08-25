@@ -22,13 +22,35 @@ class Place extends Equatable {
     required this.long,
   });
 
+  static const empty = Place(
+    lat: 0,
+    long: 0,
+  );
+
   factory Place.fromJson(Map<String, dynamic> json) {
-    return Place(
-      placeId: json['place_id'],
-      name: json['formatted_address'],
-      lat: json['geometry']['location']['lat'],
-      long: json['geometry']['location']['lng'],
-    );
+    if (!json.keys.contains('name')) {
+      return Place(
+        placeId: json['place_id'],
+        name: json['description'],
+        lat: 0,
+        long: 0,
+      );
+    }
+    if (json.keys.contains('place_id')) {
+      return Place(
+        placeId: json['place_id'],
+        name: json['name'],
+        lat: json['geometry']['location']['lat'],
+        long: json['geometry']['location']['lng'],
+      );
+    } else {
+      return Place(
+        placeId: json['placeId'],
+        name: json['name'],
+        lat: json['lat'],
+        long: json['long'],
+      );
+    }
   }
 
   @override

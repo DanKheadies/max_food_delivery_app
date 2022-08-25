@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:max_food_delivery_app/repositories/voucher/voucher_respository.dart';
+import 'package:max_food_delivery_app/repositories/voucher/voucher_repository.dart';
 import 'package:meta/meta.dart';
 
 import 'package:max_food_delivery_app/models/models.dart';

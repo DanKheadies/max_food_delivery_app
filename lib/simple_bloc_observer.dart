@@ -9,8 +9,8 @@ class SimpleBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('${bloc.runtimeType} $error');
     super.onError(bloc, error, stackTrace);
+    print('${bloc.runtimeType} $error');
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:max_food_delivery_app/bloc/blocs.dart';
+import 'package:max_food_delivery_app/screens/screens.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBar({
@@ -14,6 +15,14 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      centerTitle: false,
+      leading: IconButton(
+        icon: const Icon(Icons.person),
+        onPressed: () {
+          Navigator.pushNamed(context, LocationScreen.routeName);
+        },
+      ),
       title: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
           if (state is LocationLoading) {
@@ -22,22 +31,27 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             );
           }
           if (state is LocationLoaded) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'CURRENT LOCATION',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-                Text(
-                  state.place.name,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-              ],
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, LocationScreen.routeName);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'CURRENT LOCATION',
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                  Text(
+                    state.place.name,
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                ],
+              ),
             );
           } else {
             return const Center(
@@ -45,12 +59,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             );
           }
         },
-      ),
-      centerTitle: false,
-      backgroundColor: Theme.of(context).primaryColor,
-      leading: IconButton(
-        icon: const Icon(Icons.person),
-        onPressed: () {},
       ),
     );
   }
