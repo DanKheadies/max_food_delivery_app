@@ -36,12 +36,15 @@ dependencies:
   equatable: ^2.0.3
   firebase_core: ^1.21.1
   flutter_bloc: ^8.0.1
+  flutter_stripe: ^5.1.0
   flutter_svg: ^1.1.0
   geolocator: ^9.0.1
   google_maps_flutter: ^2.1.7
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   http: ^0.13.4
+  pay: ^1.0.11
+  
 
 dev_dependencies:
   build_runner: ^2.2.0

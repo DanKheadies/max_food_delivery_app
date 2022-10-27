@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:max_food_delivery_app/bloc/blocs.dart';
-import 'package:max_food_delivery_app/config/app_router.dart';
-import 'package:max_food_delivery_app/config/theme.dart';
-import 'package:max_food_delivery_app/datasources/local_datasource/local_datasource.dart';
-import 'package:max_food_delivery_app/datasources/places_api/place_api.dart';
+import 'package:max_food_delivery_app/config/config.dart';
+import 'package:max_food_delivery_app/datasources/datasources.dart';
 import 'package:max_food_delivery_app/firebase_options.dart';
 import 'package:max_food_delivery_app/models/models.dart';
 import 'package:max_food_delivery_app/repositories/repositories.dart';
@@ -22,13 +20,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(PlaceAdapter());
 
-  BlocOverrides.runZoned(
-    () {
-      runApp(const MyApp());
-    },
-    blocObserver: SimpleBlocObserver(),
-  );
-  // runApp(const MyApp());
+  Bloc.observer = SimpleBlocObserver();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
